@@ -25,15 +25,6 @@ describe('addLibrariesRules', () => {
 
   beforeEach(() => {
     appTree = createEmptyWorkspace(Tree.empty()) as UnitTestTree;
-    const json: DomainConfig = {
-      [`${application}-${domain}`]: {
-        buildable: true,
-        enableIvy: true,
-        strict: false,
-        publishable: false,
-      },
-    };
-    appTree.create('domain.config.json', JSON.stringify(json));
   });
   it('should get add library rules when given add libraries schema', () => {
     const options: AddLibrariesNormalizedSchema = {
@@ -42,6 +33,10 @@ describe('addLibrariesRules', () => {
       prefix,
       style,
       routing: true,
+      buildable: true,
+      enableIvy: true,
+      strict: false,
+      publishable: false,
       libraryDefinitions: [
         {
           projectName,
@@ -56,7 +51,7 @@ describe('addLibrariesRules', () => {
       .spyOn(testingUtils, 'getExternalSchematic')
       .mockReturnValue(testingUtils.emptyRule);
 
-    addLibrariesRules(appTree, options, false);
+    addLibrariesRules(appTree, options);
     expect(testingUtils.getExternalSchematic).toHaveBeenCalledWith(
       '@nrwl/angular',
       'lib',
@@ -101,7 +96,7 @@ describe('addLibrariesRules', () => {
       .spyOn(testingUtils, 'getExternalSchematic')
       .mockReturnValue(testingUtils.emptyRule);
 
-    addLibrariesRules(appTree, options, true);
+    addLibrariesRules(appTree, options);
     expect(testingUtils.getExternalSchematic).toHaveBeenCalledWith(
       '@nrwl/angular',
       'lib',

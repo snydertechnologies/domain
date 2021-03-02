@@ -158,9 +158,7 @@ describe('domain', () => {
         checkFilesExist(`libs/${application}/${domain}/.cypress/cypress.json`)
       ).not.toThrow();
       expect(() =>
-        checkFilesExist(
-          `libs/${application}/${domain}/.cypress/storybook-cypress.json`
-        )
+        checkFilesExist(`libs/${application}/${domain}/.storybook/cypress.json`)
       ).not.toThrow();
       done();
     }, 120000);

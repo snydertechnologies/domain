@@ -4,13 +4,11 @@ import { AddLibrariesNormalizedSchema } from '../../add-libraries/model/normaliz
 import { CreateNormalizedSchema } from '../../create/model/normalized-schema.model';
 import { Linter } from '@nrwl/workspace';
 import { NxLibraryParamters } from '../model/nx-library-parameters.model';
-import { getDomainProjectConfig } from '../../../utils/domain-config';
 import { getNpmScope } from '../../../utils/nx-json';
 
 export const addLibrariesRules = (
   tree: Tree,
-  schema: AddLibrariesNormalizedSchema | CreateNormalizedSchema,
-  isForNewDomain: boolean
+  schema: AddLibrariesNormalizedSchema | CreateNormalizedSchema
 ): Rule[] =>
   schema.libraryDefinitions.map((definition) => {
     const parameters: NxLibraryParamters = {
@@ -20,35 +18,14 @@ export const addLibrariesRules = (
       linter: Linter.EsLint,
       style: schema.style,
       prefix: schema.prefix,
+      buildable: schema.buildable,
+      strict: schema.strict,
+      enableIvy: schema.enableIvy,
+      publishable: schema.publishable,
     };
     if (schema.routing !== undefined) {
       parameters.routing = schema.routing;
       parameters.lazy = schema.routing;
-    }
-    if (isForNewDomain) {
-      const createSchema = schema as CreateNormalizedSchema;
-      if (createSchema.buildable !== undefined) {
-        parameters.buildable = createSchema.buildable;
-      }
-      if (createSchema.strict !== undefined) {
-        parameters.strict = createSchema.strict;
-      }
-      if (createSchema.enableIvy !== undefined) {
-        parameters.enableIvy = createSchema.enableIvy;
-      }
-      if (createSchema.publishable !== undefined) {
-        parameters.publishable = createSchema.publishable;
-      }
-    } else {
-      const projectConfig = getDomainProjectConfig(
-        tree,
-        schema.application,
-        schema.domain
-      );
-      parameters.buildable = projectConfig.buildable;
-      parameters.strict = projectConfig.strict;
-      parameters.enableIvy = projectConfig.enableIvy;
-      parameters.publishable = projectConfig.publishable;
     }
     if (parameters.publishable) {
       parameters.importPath = `@${getNpmScope(tree)}/${schema.application}/${

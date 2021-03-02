@@ -101,10 +101,7 @@ const deleteStorybookFiles = (application: string, domain: string): Rule => (
   const cypressFolder = getDirInTree(tree, cypressProjectFolder);
   if (cypressFolder.subfiles.length > 0 || cypressFolder.subdirs.length > 0)
     cypressFolder.visit((file) => deleteInTree(tree, file));
-  deleteInTree(
-    tree,
-    `libs/${application}/${domain}/.cypress/storybook-cypress.json`
-  );
+  deleteInTree(tree, `libs/${application}/${domain}/.storybook/cypress.json`);
   return tree;
 };
 

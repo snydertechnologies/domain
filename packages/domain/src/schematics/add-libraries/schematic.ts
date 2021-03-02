@@ -44,7 +44,7 @@ export default function (options: AddLibrariesSchematicSchema): Rule {
     );
     checkDomainExists(application, domain, tree);
     checkLibrariesDontExist(application, domain, libraries, tree);
-    let rules = addLibrariesRules(tree, normalizedOptions, false);
+    let rules = addLibrariesRules(tree, normalizedOptions);
     rules.concat(addStoryFileExclusions(application, domain, libraries));
     if (libraries.includes(DomainLibraryName.Util)) {
       rules.push(addMockFile(application, domain));

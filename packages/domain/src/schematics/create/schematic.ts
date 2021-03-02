@@ -66,7 +66,7 @@ export default function (options: CreateSchematicSchema): Rule {
       `Creating domain ${application}-${getParsedDomain(domain)}`
     );
     const normalizedOptions = normalizeOptions(options);
-    let rules = addLibrariesRules(tree, normalizedOptions, true);
+    let rules = addLibrariesRules(tree, normalizedOptions);
 
     if (isChildDomain(options.domain)) {
       const parentDomain = getTopLevelDomain(domain);

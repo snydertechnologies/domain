@@ -10,4 +10,8 @@ export interface AddLibrariesSchematicSchema {
   tsConfigPath?: string;
   addJestJunitReporter?: boolean;
   routing?: boolean;
+  buildable?: boolean;
+  strict?: boolean;
+  enableIvy?: boolean;
+  publishable?: boolean;
 }
