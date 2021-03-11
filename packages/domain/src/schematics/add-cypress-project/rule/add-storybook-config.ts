@@ -102,9 +102,12 @@ const updateCypressJsonReferencesFolders = (
     (json) => {
       delete json.fixturesFolder;
       delete json.pluginsFile;
-      json['integrationFolder'] = json['integrationFolder'].replace(
-        '/integration',
-        '/integration/storybook'
+      json['integrationFolder'] = json['integrationFolder']
+        .replace('/integration', '/integration/storybook')
+        .replace('./src', '../.cypress/src');
+      json['supportFile'] = json['supportFile'].replace(
+        './src',
+        '../.cypress/src'
       );
       return json;
     }
